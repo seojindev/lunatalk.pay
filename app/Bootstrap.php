@@ -1,9 +1,4 @@
 <?php
 
-use App\util\Route;
-
-Route::add('/test', function() {
-    echo BASEPATH;
-}, 'get');
-
-Route::run(BASEPATH);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
