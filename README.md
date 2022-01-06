@@ -1,4 +1,4 @@
-# lunatalk.media
+# lunatalk.pay
 
 
 
