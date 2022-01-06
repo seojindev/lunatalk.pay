@@ -1,0 +1,17 @@
+{
+    "name": "lunatalk1/lunatalk.pay",
+    "type": "project",
+    "description": "Lunatalk Pay-Site Project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lunatalk1",
+            "email": "lunatalk1@gmail.com"
+        }
+    ],
+    "require": {}
+}
