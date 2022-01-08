@@ -1,6 +1,6 @@
 <?php
 
-namespace App\util;
+namespace App\Util;
 
 class Route {
 
@@ -9,18 +9,18 @@ class Route {
     private static $methodNotAllowed = null;
 
     /**
-     * Function used to add a new route
+     * Function used to add a new Route
      * @param string $expression    Route string or expression
-     * @param callable $function    Function to call if route with allowed method is found
+     * @param callable $function    Function to call if Route with allowed method is found
      * @param string|array $method  Either a string of allowed method or an array with string values
      *
      */
     public static function add($expression, $function, $method = 'get'){
-        array_push(self::$routes, Array(
+        self::$routes[] = array(
             'expression' => $expression,
             'function' => $function,
             'method' => $method
-        ));
+        );
     }
 
     public static function pathNotFound($function) {
@@ -34,7 +34,7 @@ class Route {
     public static function run($basepath = '', $case_matters = false, $trailing_slash_matters = false, $multimatch = false) {
 
         // The basepath never needs a trailing slash
-        // Because the trailing slash will be added using the route expressions
+        // Because the trailing slash will be added using the Route expressions
         $basepath = rtrim($basepath, '/');
 
         // Parse current URL
@@ -104,14 +104,14 @@ class Route {
                 }
             }
 
-            // Break the loop if the first found route is a match
+            // Break the loop if the first found Route is a match
             if($route_match_found&&!$multimatch) {
                 break;
             }
 
         }
 
-        // No matching route was found
+        // No matching Route was found
         if (!$route_match_found) {
             // But a matching path exists
             if ($path_match_found) {
