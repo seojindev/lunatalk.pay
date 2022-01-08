@@ -17,9 +17,12 @@ class OrderController
         if($order['state'] === false) {
             echo "error";
         } else {
-            $view = file_get_contents(VIEWS . '/' . 'index.html');
+            $view = file_get_contents(VIEWS . '/' . 'order.html');
 
             $view = str_replace('^order_uuid^', $order['result']['uuid'], $view);
+            $view = str_replace('^order_name^', $order['result']['order_name'], $view);
+            $view = str_replace('^order_price^', $order['result']['order_price'], $view);
+            $view = str_replace('^order_price2^', number_format($order['result']['order_price']), $view);
 
             echo $view;
         }

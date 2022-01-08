@@ -7,6 +7,6 @@ Route::add('/test', function() {
 }, 'get');
 
 
-Route::add('/order', OrderController::order(), 'get');
+Route::add('/v1/order', OrderController::order(), 'get');
 
 Route::run(BASEPATH);

@@ -43,13 +43,12 @@ trait Databases
         $db->where ('order_id', $master['id']);
         $products = $db->get('order_products');
 
-        print_r($products);
-
-
         return [
             'state' => true,
             'result' => [
-                'uuid' => $uuid
+                'uuid' => $uuid,
+                'order_name' => $master['order_name'],
+                'order_price' => $master['order_price'],
             ]
         ];
     }
