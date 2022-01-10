@@ -61,6 +61,9 @@ Route::add('/v1/success', function() {
     $httpCode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
     $isSuccess = $httpCode == 200;
     $responseJson = json_decode($response);
+    $responseArray = (array) json_decode($response);
+
+    Databases::insertPayments($responseArray);
 
     if ($isSuccess) {
         $view = file_get_contents(VIEWS . '/' . 'success.html');
@@ -70,9 +73,6 @@ Route::add('/v1/success', function() {
         echo $view;
 
     } else {
-//        echo "<h1>결제 실패</h1>";
-//        echo "<p>" .$responseJson->message . "</p>";
-//        echo "<span>에러코드:" . $responseJson->code . "</span>";
 
         $view = file_get_contents(VIEWS . '/' . 'fail.html');
 
