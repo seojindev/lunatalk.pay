@@ -145,7 +145,7 @@
             };
 
             if (method === '가상계좌') {
-                paymentData.virtualAccountCallbackUrl = 'http://localhost/virtual_account_callback.php'
+                paymentData.virtualAccountCallbackUrl = window.location.origin + '/v1/vcallback'
             }
 
             tossPayments.requestPayment(method, paymentData);
