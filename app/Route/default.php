@@ -111,4 +111,21 @@ Route::add('/v1/vcallback', function() {
 
 }, 'post');
 
+Route::add('/v1/vcallback', function() {
+    $postData = file_get_contents('php://input');
+    $json = json_decode($postData);
+
+    if ($json->status == 'DONE') {
+        // handle deposit result
+    }
+
+    ob_start();
+    print_r($json);
+    $result = ob_get_clean();
+    file_put_contents('file.txt', $result);
+
+    // echo json_encode($json, JSON_UNESCAPED_UNICODE);
+
+}, 'get');
+
 Route::run(BASEPATH);
