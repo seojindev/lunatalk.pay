@@ -136,7 +136,7 @@ trait Databases
 
         $db->update ('order_payments', [
             'status' => 'DONE',
-            'approvedAt' => date('Y-m-d\TH:i:sO'),
+            'approvedAt' => date('Y-m-d\TH:i:s:O'),
         ]);
     }
 
