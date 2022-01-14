@@ -135,7 +135,8 @@ trait Databases
         $db->where ('secret', $secret);
 
         $db->update ('order_payments', [
-            'status' => 'DONE'
+            'status' => 'DONE',
+            'approvedAt' => date('Y-m-dTH:i:s+09:00'),
         ]);
     }
 
