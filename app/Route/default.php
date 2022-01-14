@@ -109,6 +109,6 @@ Route::add('/v1/vcallback', function() {
 
     // echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
-}, 'post');
+}, 'get');
 
 Route::run(BASEPATH);
