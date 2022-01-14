@@ -148,6 +148,10 @@
                 paymentData.virtualAccountCallbackUrl = window.location.origin + '/v1/vcallback'
             }
 
+            console.debug({
+                method : method,
+                paymentData : paymentData
+            });
             tossPayments.requestPayment(method, paymentData);
         }
 
