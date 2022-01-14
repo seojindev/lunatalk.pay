@@ -105,7 +105,7 @@ Route::add('/v1/vcallback', function() {
     ob_start();
     print_r($json);
     $result = ob_get_clean();
-    file_put_contents('vcallback_get.txt', $result);
+    file_put_contents('vcallback_get_'.date('YmdHis').'.txt', $result);
 
     // echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
@@ -122,7 +122,7 @@ Route::add('/v1/vcallback', function() {
     ob_start();
     print_r($json);
     $result = ob_get_clean();
-    file_put_contents('vcallback_post.txt', $result);
+    file_put_contents('vcallback_post_'.date('YmdHis').'.txt', $result);
 
     // echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
