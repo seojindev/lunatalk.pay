@@ -109,7 +109,7 @@ Route::add('/v1/vcallback', function() {
 
     // echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
-}, 'get');
+}, 'post');
 
 Route::add('/v1/webhook', function() {
     $postData = file_get_contents('php://input');
