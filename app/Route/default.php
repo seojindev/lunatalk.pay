@@ -105,7 +105,24 @@ Route::add('/v1/vcallback', function() {
     ob_start();
     print_r($json);
     $result = ob_get_clean();
-    file_put_contents('vcallback.txt', $result);
+    file_put_contents('vcallback_get.txt', $result);
+
+    // echo json_encode($json, JSON_UNESCAPED_UNICODE);
+
+}, 'get');
+
+Route::add('/v1/vcallback', function() {
+    $postData = file_get_contents('php://input');
+    $json = json_decode($postData);
+
+    if ($json->status == 'DONE') {
+        // handle deposit result
+    }
+
+    ob_start();
+    print_r($json);
+    $result = ob_get_clean();
+    file_put_contents('vcallback_post.txt', $result);
 
     // echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
