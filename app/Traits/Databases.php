@@ -129,6 +129,16 @@ trait Databases
         }
     }
 
+    public static function updateSuccessVirtualCallback($secret = '') {
+        $db = self::$DB;
+
+        $db->where ('secret', $secret);
+
+        $db->update ('order_payments', [
+            'status' => 'DONE'
+        ]);
+    }
+
 
     public static function insertNicapageMediaFiles($params = [])
     {

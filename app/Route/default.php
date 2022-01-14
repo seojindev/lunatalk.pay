@@ -85,7 +85,6 @@ Route::add('/v1/success', function() {
 Route::add('/v1/fail', function() {
     Databases::init();
 
-
     $view = file_get_contents(VIEWS . '/' . 'fail.html');
 
     $view = str_replace('^front_url^', $_ENV['FRONT_URL'], $view);
@@ -94,56 +93,29 @@ Route::add('/v1/fail', function() {
 
 }, 'get');
 
+
 Route::add('/v1/vcallback', function() {
+
+    Databases::init();
+
     $postData = file_get_contents('php://input');
     $json = json_decode($postData);
 
     if ($json->status == 'DONE') {
-        // handle deposit result
+        Databases::updateSuccessVirtualCallback($json->secret);
+    }
+
+    $path = "./logs/" . date('Ymd');
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
     }
 
     ob_start();
     print_r($json);
     $result = ob_get_clean();
-    file_put_contents('vcallback_get_'.date('YmdHis').'.txt', $result);
-
-    // echo json_encode($json, JSON_UNESCAPED_UNICODE);
-
-}, 'get');
-
-Route::add('/v1/vcallback', function() {
-    $postData = file_get_contents('php://input');
-    $json = json_decode($postData);
-
-    if ($json->status == 'DONE') {
-        // handle deposit result
-    }
-
-    ob_start();
-    print_r($json);
-    $result = ob_get_clean();
-    file_put_contents('vcallback_post_'.date('YmdHis').'.txt', $result);
-
-    // echo json_encode($json, JSON_UNESCAPED_UNICODE);
-
+    file_put_contents($path . '/' . 'vcallback_post_'.date('YmdHis').'.txt', $result);
 }, 'post');
 
-Route::add('/v1/webhook', function() {
-    $postData = file_get_contents('php://input');
-    $json = json_decode($postData);
-
-    if ($json->status == 'DONE') {
-        // handle deposit result
-    }
-
-    ob_start();
-    print_r($json);
-    $result = ob_get_clean();
-    file_put_contents('webhook_get_'.date('YmdHis').'.txt', $result);
-
-    // echo json_encode($json, JSON_UNESCAPED_UNICODE);
-
-}, 'get');
 
 Route::add('/v1/webhook', function() {
     $postData = file_get_contents('php://input');
@@ -153,12 +125,15 @@ Route::add('/v1/webhook', function() {
         // handle deposit result
     }
 
+    $path = "./logs/" . date('Ymd');
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
+    }
+
     ob_start();
     print_r($json);
     $result = ob_get_clean();
-    file_put_contents('webhook_post_'.date('YmdHis').'.txt', $result);
-
-    // echo json_encode($json, JSON_UNESCAPED_UNICODE);
+    file_put_contents($path . '/' . 'webhook_post_'.date('YmdHis').'.txt', $result);
 
 }, 'post');
 
