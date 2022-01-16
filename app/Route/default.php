@@ -66,16 +66,20 @@ Route::add('/v1/success', function() {
 
     if ($isSuccess) {
 
-        Databases::updateActive($orderId);
+
         Databases::insertPayments($responseArray);
 
         if($responseArray['method'] == '가상계좌') {
+
+            Databases::updateActive($orderId, '5100020'); // 결제 완료 처리.
 
             $orderLogMessage = date('YmdHis').": 성공(가상계좌)";
             Databases::updateOrderLog($orderId, $orderLogMessage);
 
             $view = file_get_contents(VIEWS . '/' . 'success_virtual.html');
         } else {
+
+            Databases::updateActive($orderId, '5100030'); // 결제 대기 처리.
 
             $orderLogMessage = date('YmdHis').": 결제 성공(카드)";
             Databases::updateOrderLog($orderId, $orderLogMessage);
@@ -94,6 +98,8 @@ Route::add('/v1/success', function() {
         $orderLogMessage .= $responseJson->message;
         $orderLogMessage .= $responseJson->code;
         Databases::updateOrderLog($orderId, $orderLogMessage);
+
+        Databases::updateActive($orderId, '5100000'); // 결제 실패 처리.
 
         $view = file_get_contents(VIEWS . '/' . 'fail.html');
 

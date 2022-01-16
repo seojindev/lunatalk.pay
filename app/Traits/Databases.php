@@ -56,13 +56,14 @@ trait Databases
         ];
     }
 
-    public static function updateActive($uuid = '') {
+    public static function updateActive($uuid = '', $state = '') {
         $db = self::$DB;
 
         $db->where ('uuid', $uuid);
 
         $db->update ('order_masters', [
             'active' => 'Y',
+            'state' => $state
         ]);
     }
 
