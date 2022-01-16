@@ -61,7 +61,7 @@ trait Databases
 
         $db->where ('uuid', $uuid);
 
-        $db->update ('order_payments', [
+        $db->update ('order_masters', [
             'active' => 'Y',
         ]);
     }
