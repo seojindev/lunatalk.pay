@@ -49,9 +49,44 @@ trait Databases
                 'id' => $master['id'],
                 'uuid' => $master['uuid'],
                 'order_name' => $master['order_name'],
+                'order_user_name' => $master['name'],
                 'order_price' => $master['order_price'],
+                'state' => $master['state'],
             ]
         ];
+    }
+
+    public static function updateActive($uuid = '') {
+        $db = self::$DB;
+
+        $db->where ('uuid', $uuid);
+
+        $db->update ('order_payments', [
+            'active' => 'Y',
+        ]);
+    }
+
+    public static function getOrderLog($uuid = '') {
+        $db = self::$DB;
+
+        $db->where ('uuid', $uuid);
+        $orderMaster = $db->getOne ('order_masters');
+
+        return $orderMaster['order_log'];
+    }
+
+    public static function updateOrderLog($uuid = '', $logMessage = '') {
+        $db = self::$DB;
+
+        $order_log = self::getOrderLog($uuid);
+
+        $db->where ('uuid', $uuid);
+
+        $newOrderLog = $order_log . "\n".$logMessage;
+
+        $db->update ('order_payments', [
+            'log_order' => $newOrderLog,
+        ]);
     }
 
     public static function insertPayments($params = []) {
