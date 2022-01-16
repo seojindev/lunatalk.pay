@@ -84,7 +84,7 @@ trait Databases
 
         $newOrderLog = $order_log . "\n".$logMessage;
 
-        $db->update ('order_payments', [
+        $db->update ('order_masters', [
             'log_order' => $newOrderLog,
         ]);
     }
