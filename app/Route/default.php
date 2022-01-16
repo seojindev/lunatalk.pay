@@ -66,7 +66,12 @@ Route::add('/v1/success', function() {
     Databases::insertPayments($responseArray);
 
     if ($isSuccess) {
-        $view = file_get_contents(VIEWS . '/' . 'success.html');
+        if($responseArray['method'] == '가상계좌') {
+            $view = file_get_contents(VIEWS . '/' . 'success_virtual.html');
+        } else {
+            $view = file_get_contents(VIEWS . '/' . 'success.html');
+        }
+
 
         $view = str_replace('^front_url^', $_ENV['FRONT_URL'], $view);
 
