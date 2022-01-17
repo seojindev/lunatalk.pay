@@ -17,6 +17,16 @@ Route::add('/v1/order', function() {
     if($order['state'] === false) {
         echo "error";
     } else {
+
+        if($order['result']['state'] === 'Y') {
+
+            $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
+            echo $view;
+            exit;
+        }
+
+
+
         $view = file_get_contents(VIEWS . '/' . 'order.html');
 
         $view = str_replace('^order_client_key^', $_ENV['TOSS_CLIENT_KEY'], $view);
@@ -38,6 +48,17 @@ Route::add('/v1/success', function() {
     $amount = $_GET['amount'];
 
     $secretKey = $_ENV['TOSS_SECRET_KEY'];
+
+
+    $order = Databases::getOrderData($orderId);
+
+    if($order['result']['state'] === 'Y') {
+
+        $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
+        echo $view;
+        exit;
+    }
+
 
     $url = 'https://api.tosspayments.com/v1/payments/' . $paymentKey;
 
