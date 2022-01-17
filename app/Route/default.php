@@ -21,6 +21,7 @@ Route::add('/v1/order', function() {
         if($order['result']['active'] === 'Y') {
 
             $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
+            $view = str_replace('^front_url^', $_ENV['FRONT_URL'], $view);
             echo $view;
             exit;
         }
@@ -55,6 +56,7 @@ Route::add('/v1/success', function() {
     if($order['result']['active'] === 'Y') {
 
         $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
+        $view = str_replace('^front_url^', $_ENV['FRONT_URL'], $view);
         echo $view;
         exit;
     }
