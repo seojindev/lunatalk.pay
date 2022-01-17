@@ -18,7 +18,7 @@ Route::add('/v1/order', function() {
         echo "error";
     } else {
 
-        if($order['result']['state'] === 'Y') {
+        if($order['result']['active'] === 'Y') {
 
             $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
             echo $view;
@@ -52,7 +52,7 @@ Route::add('/v1/success', function() {
 
     $order = Databases::getOrderData($orderId);
 
-    if($order['result']['state'] === 'Y') {
+    if($order['result']['active'] === 'Y') {
 
         $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
         echo $view;

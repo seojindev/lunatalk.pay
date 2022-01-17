@@ -52,6 +52,7 @@ trait Databases
                 'order_user_name' => $master['name'],
                 'order_price' => $master['order_price'],
                 'state' => $master['state'],
+                'active' => $master['active'],
             ]
         ];
     }
