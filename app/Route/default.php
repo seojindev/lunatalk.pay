@@ -26,16 +26,16 @@ Route::add('/v1/order', function() {
             exit;
         }
 
-
-
         $view = file_get_contents(VIEWS . '/' . 'order.html');
 
         $view = str_replace('^order_client_key^', $_ENV['TOSS_CLIENT_KEY'], $view);
         $view = str_replace('^order_uuid^', $order['result']['uuid'], $view);
         $view = str_replace('^order_name^', $order['result']['order_name'], $view);
         $view = str_replace('^order_user_name^', $order['result']['order_user_name'], $view);
-        $view = str_replace('^order_price^', $order['result']['order_price'], $view);
-        $view = str_replace('^order_price2^', number_format($order['result']['order_price']), $view);
+        //$view = str_replace('^order_price^', $order['result']['order_price'], $view);
+        //$view = str_replace('^order_price2^', number_format($order['result']['order_price']), $view);
+        $view = str_replace('^order_price^', 200, $view);
+        $view = str_replace('^order_price2^', 200, $view);
 
         echo $view;
     }
@@ -49,8 +49,6 @@ Route::add('/v1/success', function() {
     $amount = $_GET['amount'];
 
     $secretKey = $_ENV['TOSS_SECRET_KEY'];
-
-
     $order = Databases::getOrderData($orderId);
 
     if($order['result']['active'] === 'Y') {
@@ -60,7 +58,6 @@ Route::add('/v1/success', function() {
         echo $view;
         exit;
     }
-
 
     $url = 'https://api.tosspayments.com/v1/payments/' . $paymentKey;
 
@@ -88,7 +85,6 @@ Route::add('/v1/success', function() {
     $responseArray = (array) json_decode($response);
 
     if ($isSuccess) {
-
 
         Databases::insertPayments($responseArray);
 
@@ -166,6 +162,7 @@ Route::add('/v1/vcallback', function() {
 
     if ($json->status == 'DONE') {
         Databases::updateSuccessVirtualCallback($json->secret);
+        Databases::updateSuccessVirtualCallbackPayState($json->orderId);
     }
 
     $path = "./logs/" . date('Ymd');

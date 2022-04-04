@@ -168,12 +168,22 @@ trait Databases
 
     public static function updateSuccessVirtualCallback($secret = '') {
         $db = self::$DB;
-
         $db->where ('secret', $secret);
-
         $db->update ('order_payments', [
             'status' => 'DONE',
             'approvedAt' => date('Y-m-d\TH:i:sP'),
+        ]);
+    }
+
+    public static function updateSuccessVirtualCallbackPayState($orderId = '') {
+        $db = self::$DB;
+        $order_log = self::getOrderLog($orderId);
+        $newOrderLog = $order_log . "\n".$logMessage;
+        $db->where ('uuid', $orderId);
+        $db->update ('order_masters', [
+            'state' => '5100040',
+            'order_log' => $newOrderLog,
+            'updated_at' => $db->now()
         ]);
     }
 
