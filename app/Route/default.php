@@ -32,10 +32,8 @@ Route::add('/v1/order', function() {
         $view = str_replace('^order_uuid^', $order['result']['uuid'], $view);
         $view = str_replace('^order_name^', $order['result']['order_name'], $view);
         $view = str_replace('^order_user_name^', $order['result']['order_user_name'], $view);
-        //$view = str_replace('^order_price^', $order['result']['order_price'], $view);
-        //$view = str_replace('^order_price2^', number_format($order['result']['order_price']), $view);
-        $view = str_replace('^order_price^', 200, $view);
-        $view = str_replace('^order_price2^', 200, $view);
+        $view = str_replace('^order_price^', $order['result']['order_price'], $view);
+        $view = str_replace('^order_price2^', number_format($order['result']['order_price']), $view);
 
         echo $view;
     }
