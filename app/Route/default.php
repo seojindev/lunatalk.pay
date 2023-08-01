@@ -51,9 +51,10 @@ Route::add('/v1/success', function() {
 
     if($order['result']['active'] === 'Y') {
 
-        $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
-        $view = str_replace('^front_url^', $_ENV['FRONT_URL'], $view);
-        echo $view;
+        // $view = file_get_contents(VIEWS . '/' . 'fail_order.html');
+        // $view = str_replace('^front_url^', $_ENV['FRONT_URL'], $view);
+        // echo $view;
+        header("Location:". $_ENV['FRONT_URL']. "/payment?result=false");
         exit;
     }
 
@@ -101,7 +102,9 @@ Route::add('/v1/success', function() {
             $orderLogMessage = date('YmdHis').": 결제 성공(카드)";
             Databases::updateOrderLog($orderId, $orderLogMessage);
 
-            $view = file_get_contents(VIEWS . '/' . 'success.html');
+            // $view = file_get_contents(VIEWS . '/' . 'success.html');
+            header("Location:". $_ENV['FRONT_URL']. "/payment?result=true");
+            exit;
         }
 
 
